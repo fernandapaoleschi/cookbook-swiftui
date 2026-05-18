@@ -38,7 +38,7 @@ Também podemos exibir valores armazenados em variáveis ou constantes.
 import SwiftUI
 
 struct ContentView: View {
-    let nome = "Fernanda"
+    let nome = "Marina"
     
     var body: some View {
         Text("Olá, \(nome)!")
@@ -49,7 +49,7 @@ struct ContentView: View {
 Resultado exibido na tela:
 
 ```txt
-Olá, Fernanda!
+Olá, Marina!
 ```
 
 O trecho `\(nome)` é chamado de **interpolação de string**.
@@ -66,7 +66,7 @@ Podemos exibir valores numéricos usando interpolação.
 import SwiftUI
 
 struct ContentView: View {
-    let idade = 20
+    let idade = 21
     
     var body: some View {
         Text("Idade: \(idade)")
@@ -77,7 +77,7 @@ struct ContentView: View {
 Resultado:
 
 ```txt
-Idade: 20
+Idade: 21
 ```
 
 ---
@@ -407,7 +407,63 @@ Nesse exemplo:
 
 ---
 
-## 16. Exemplo completo
+## 16. Exemplo com dados preenchidos
+
+Neste exemplo, alguns dados já começam preenchidos para facilitar a visualização da saída de dados.
+
+```swift
+import SwiftUI
+
+struct ContentView: View {
+    @State private var nome = "Bianca"
+    @State private var idade = 19
+    @State private var cursoSelecionado = "Design"
+    @State private var receberNotificacoes = true
+    
+    let cursos = ["Design", "Programação", "Inovação"]
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Perfil do Estudante")
+                .font(.title2)
+                .bold()
+            
+            TextField("Digite seu nome", text: $nome)
+                .textFieldStyle(.roundedBorder)
+            
+            Stepper("Idade: \(idade)", value: $idade, in: 0...120)
+            
+            Picker("Curso", selection: $cursoSelecionado) {
+                ForEach(cursos, id: \.self) { curso in
+                    Text(curso)
+                }
+            }
+            .pickerStyle(.menu)
+            
+            Toggle("Receber notificações", isOn: $receberNotificacoes)
+            
+            Text("Nome: \(nome)")
+            Text("Idade: \(idade)")
+            Text("Curso: \(cursoSelecionado)")
+            Text("Notificações: \(receberNotificacoes ? "Sim" : "Não")")
+        }
+        .padding()
+    }
+}
+```
+
+Resultado inicial esperado:
+
+```txt
+Nome: Bianca
+Idade: 19
+Curso: Design
+Notificações: Sim
+```
+
+---
+
+## 17. Exemplo completo
 
 ```swift
 import SwiftUI
@@ -416,10 +472,10 @@ struct ContentView: View {
     @State private var nome = ""
     @State private var idade = 18
     @State private var receberNotificacoes = false
-    @State private var linguagemSelecionada = "Swift"
+    @State private var cursoSelecionado = "Programação"
     @State private var mensagemFinal = ""
     
-    let linguagens = ["Swift", "JavaScript", "Python", "Java"]
+    let cursos = ["Design", "Programação", "Inovação"]
     
     var body: some View {
         VStack(spacing: 20) {
@@ -434,9 +490,9 @@ struct ContentView: View {
             
             Toggle("Receber notificações", isOn: $receberNotificacoes)
             
-            Picker("Linguagem favorita", selection: $linguagemSelecionada) {
-                ForEach(linguagens, id: \.self) { linguagem in
-                    Text(linguagem)
+            Picker("Curso", selection: $cursoSelecionado) {
+                ForEach(cursos, id: \.self) { curso in
+                    Text(curso)
                 }
             }
             .pickerStyle(.menu)
@@ -445,7 +501,7 @@ struct ContentView: View {
                 mensagemFinal = """
                 Nome: \(nome)
                 Idade: \(idade)
-                Linguagem: \(linguagemSelecionada)
+                Curso: \(cursoSelecionado)
                 Notificações: \(receberNotificacoes ? "Sim" : "Não")
                 """
             }
@@ -460,7 +516,7 @@ struct ContentView: View {
 
 ---
 
-## 17. Diferença entre entrada e saída
+## 18. Diferença entre entrada e saída
 
 | Conceito | Significado | Exemplo em SwiftUI |
 |---|---|---|
@@ -501,8 +557,8 @@ Crie uma tela em SwiftUI com:
 Exemplo esperado:
 
 ```txt
-Nome: Fernanda
-Idade: 20
-Curso: Engenharia Eletrônica
+Nome: Carlos
+Idade: 22
+Curso: Programação
 Notificações: Sim
 ```
